@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="MvvmNorthwind.Views.SupplierView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MvvmNorthwind.Views" xmlns:viewModel="clr-namespace:MvvmNorthwind.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <viewModel:SuppliersVM/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80*"/>
+            <ColumnDefinition Width="20*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer  Grid.Row="0" Grid.RowSpan="2">
+        <StackPanel Background="green">
+            <DockPanel Margin="10">
+                <Label Content="Company name:" Width="100" HorizontalContentAlignment="right"/>
+                <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.CompanyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+            </DockPanel>
+            <DockPanel Margin="10">
+                <Label Content="Contact name:" Width="100" HorizontalContentAlignment="right"/>
+                <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.ContactName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+            </DockPanel>
+            <DockPanel Margin="10">
+                <Label Content="Contact title:" Width="100" HorizontalContentAlignment="right"/>
+                <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.ContactTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+            </DockPanel>
+            <DockPanel Margin="10">
+                <Label Content="Address:" Width="100" HorizontalContentAlignment="right"/>
+                <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+            </DockPanel>
+            <DockPanel Margin="10">
+                <Label Content="City:" Width="100" HorizontalContentAlignment="right"/>
+                <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+            </DockPanel>
+                <DockPanel Margin="10">
+                    <Label Content="Region:" Width="100" HorizontalContentAlignment="right"/>
+                    <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.Region, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+                </DockPanel>
+                <DockPanel Margin="10">
+                    <Label Content="Postal code:" Width="100" HorizontalContentAlignment="right"/>
+                    <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.PostalCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+                </DockPanel>
+                <DockPanel Margin="10">
+                    <Label Content="Country:" Width="100" HorizontalContentAlignment="right"/>
+                    <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.Country, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+                </DockPanel>
+                <DockPanel Margin="10">
+                    <Label Content="Phone:" Width="100" HorizontalContentAlignment="right"/>
+                    <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+                </DockPanel>
+                <DockPanel Margin="10">
+                    <Label Content="Fax:" Width="100" HorizontalContentAlignment="right"/>
+                    <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.Fax, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+                </DockPanel>
+                <DockPanel Margin="10">
+                    <Label Content="Homepage:" Width="100" HorizontalContentAlignment="right"/>
+                    <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.HomePage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+                </DockPanel>
+                <DockPanel>
+                    <Button Content="Update" Command="{Binding UpdateSupplierCommand}" CommandParameter="{Binding ElementName=productGrid, Path=SelectedItem}"/>
+                </DockPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <DataGrid x:Name="productGrid" ItemsSource="{Binding Path = AllSuppliers, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" Grid.Column="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Product name" Binding="{Binding CompanyName, UpdateSourceTrigger=PropertyChanged}" Width="100*"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DockPanel Grid.Row="1" Grid.Column="1">
+            <Button Command="{Binding SupplierCommand}" CommandParameter="{Binding ElementName=newSupplierBox, Path=Text}" Content="Add" Padding="10" Height="50"/>
+            <TextBox x:Name="newSupplierBox" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="TextBox" TextWrapping="Wrap" Height="50"/>
+        </DockPanel>
+    </Grid>
+</UserControl>

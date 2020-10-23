@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="MvvmNorthwind.Views.ProductView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local = "clr-namespace:MvvmNorthwind.Views"
+             xmlns:viewModel = "clr-namespace:MvvmNorthwind.ViewModel"
+             xmlns:layout="clr-namespace:MvvmNorthwind.Views.Layout"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <viewModel:ProductsVM/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80*"/>
+            <ColumnDefinition Width="20*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0" Grid.RowSpan="2">
+            <StackPanel Background="green">
+                <DockPanel Margin="10">
+                    <Label Content="Product name:" Width="100" HorizontalContentAlignment="right"/>
+                    <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.SupplierId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+                </DockPanel>
+                <DockPanel Margin="10">
+                    <Label Content="Price:" Width="100" HorizontalContentAlignment="right"/>
+                    <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.UnitPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+                </DockPanel>
+                <DockPanel Margin="10">
+                    <Label Content="Quantity per unit:" Width="100" HorizontalContentAlignment="right"/>
+                    <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.QuantityPerUnit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+                </DockPanel>
+                <DockPanel Margin="10">
+                    <Label Content="Units in stock:" Width="100" HorizontalContentAlignment="right"/>
+                    <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.UnitsInStock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+                </DockPanel>
+                <DockPanel Margin="10">
+                    <Label Content="Units on order:" Width="100" HorizontalContentAlignment="right"/>
+                    <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.UnitsOnOrder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+                </DockPanel>
+                <DockPanel Margin="10">
+                    <Label Content="Reorder level:" Width="100" HorizontalContentAlignment="right"/>
+                    <TextBox Width="400" HorizontalAlignment="Left" Text="{Binding SelectedItem.ReorderLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=productGrid}" TextWrapping="Wrap"/>
+                </DockPanel>
+                <DockPanel>
+                    <ComboBox ItemsSource="{Binding Path=AllSuppliers}" DisplayMemberPath="CompanyName" SelectedValuePath="{Binding Path=SelectedProduct.Supplier, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"></ComboBox>
+                </DockPanel>
+                <DockPanel>
+                    <ComboBox ItemsSource="{Binding Path=AllCategories}" DisplayMemberPath="CategoryName" SelectedValuePath="{Binding Path=SelectedProduct.Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True"></ComboBox>
+                </DockPanel>
+                <DockPanel>
+                    <Button Content="Update" Command="{Binding UpdateEntityCommand}" CommandParameter="{Binding Path=SelectedProduct}"/>
+                </DockPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <DataGrid x:Name="productGrid" ItemsSource="{Binding Path = AllProducts, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" Grid.Column="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Product name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="100*"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DockPanel Grid.Row="1" Grid.Column="1">
+            <Button Command="{Binding ProductCommand}" CommandParameter="{Binding ElementName=newProductBox, Path=Text}" Content="Add" Padding="10" Height="50"/>
+            <TextBox x:Name="newProductBox" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="TextBox" TextWrapping="Wrap" Height="50"/>
+        </DockPanel>
+    </Grid>
+</UserControl>
